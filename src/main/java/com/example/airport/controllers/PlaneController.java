@@ -1,13 +1,11 @@
 package com.example.airport.controllers;
 
+import com.example.airport.exceptions.NotFoundException;
 import com.example.airport.models.Airport;
 import com.example.airport.models.Plane;
 import com.example.airport.repositories.PlaneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * REST controller for the planes repository
@@ -48,5 +46,29 @@ public class PlaneController {
     @RequestMapping(value="delete", method = RequestMethod.DELETE)
     public void deletePlane(@RequestBody Plane plane){
         planeRepository.delete(plane);
+    }
+
+    /**
+     * Add gas to certain plane
+     * @param id id of the plane in this case
+     */
+    @RequestMapping(value="addGas/{id}", method = RequestMethod.PUT)
+    public void addGasToPlane(@PathVariable long id){
+        // Find plane
+        Plane dbPlane = planeRepository.findOne(id);
+        if(dbPlane == null) {
+            throw new NotFoundException(); // not going into too much specifics for now.
+        }
+        dbPlane.setGasLevel(dbPlane.getMaxGasLevel());
+        planeRepository.save(dbPlane);
+    }
+
+    /**
+     * Delete functionality
+     * @param id id of plane to remove
+     */
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    public void deletePlane(@PathVariable long id){
+        planeRepository.delete(id);
     }
 }

@@ -35,6 +35,21 @@ function format ( airport ) {
     return table;
 }
 
+function addGasToPlane(id){
+
+    $.ajax({
+        url: "http://localhost:8080/api/airport/planes/addGas/" + id,
+        type:"put",
+        success: function(response){
+            updateModalText("Message", "We have added gas!");
+            // Show result
+            $("#standardModal").modal("toggle");
+            // Refresh dataTable
+            getAirportData();
+        }
+    });
+}
+
 $(document).ready(function (){
 
 
