@@ -1,5 +1,6 @@
 package com.example.airport.controllers;
 
+import com.example.airport.exceptions.NoFuelException;
 import com.example.airport.exceptions.NotFoundException;
 import com.example.airport.models.Airport;
 import com.example.airport.models.AirportPlanePair;
@@ -106,11 +107,16 @@ public class AirportController {
             throw new NotFoundException();
         }
 
+        // Check if plane exists in airportStart.
+        if(!airportStart.containsPlane(plane)){
+            throw new NotFoundException();
+        }
+
         int gasAmount = 2;
 
         // Check whether the plane has enough gas
         if(plane.getGasLevel() < 2){
-
+            throw new NoFuelException();
         }
 
         airportStart.deletePlane(plane);
@@ -125,5 +131,13 @@ public class AirportController {
         plane.setGasLevel(plane.getGasLevel() - gasAmount);
     }
 
+    /**
+     * Delete functionality
+     * @param id id of airport to remove
+     */
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    public void deleteAircraft(@PathVariable long id){
+        airportRepository.delete(id);
+    }
 
 }

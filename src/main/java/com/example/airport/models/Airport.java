@@ -36,6 +36,10 @@ public class Airport {
         }
     }
 
+    public boolean containsPlane(Plane plane){
+        return planes.contains(plane);
+    }
+
     /**
      * Remove a plane from the list
      * @param plane
