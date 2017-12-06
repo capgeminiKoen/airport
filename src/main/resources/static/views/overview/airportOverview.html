@@ -2,8 +2,9 @@
 
 <button data-toggle="modal" class="btn btn-primary" data-target="#addAirportModal">+ Add Airport</button>
 
-<table id="airportTable">
+<table id="airportTable" class="display">
     <thead>
+        <th></th>
         <th>Name</th>
         <th>City</th>
     </thead>
@@ -11,7 +12,6 @@
 
     </tbody>
 </table>
-<script src="js/airportOverview.js"></script>
 
 <!-- Modal -->
 <div id="addAirportModal" class="modal" role="dialog">
@@ -24,3 +24,6 @@
 
     </div>
 </div>
+
+<script src="js/airportOverview.js"></script>
+<link rel="stylesheet" href="css/airport.css">
