@@ -22,6 +22,10 @@ public class Airport {
     @NotNull
     private String name;
 
+    @NotNull
+    private String city;
+
+
     public long getId() {
         return id;
     }
@@ -44,5 +48,13 @@ public class Airport {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

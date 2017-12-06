@@ -19,6 +19,8 @@ public class Plane {
     private long id;
 
     @NotNull
+    private String name;
+    @NotNull
     private float gasLevel;
     @NotNull
     private float maxGasLevel;
@@ -45,5 +47,13 @@ public class Plane {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
