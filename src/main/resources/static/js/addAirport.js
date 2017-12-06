@@ -30,6 +30,8 @@ function addAirport(){
         data: airportString,
         contentType: "application/json",
         success: function(result) {
+
+            updateModalText("Yes", "Added the airport.");
             // Show result
             $("#standardModal").modal("toggle");
             // Dismiss modal

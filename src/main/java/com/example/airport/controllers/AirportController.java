@@ -66,7 +66,7 @@ public class AirportController {
      * @param airport The airport that the plane should be added to
      * @param plane The plane that should be added. Should exist.
      */
-    @RequestMapping(value="addplane", method = RequestMethod.PUT)
+    @RequestMapping(value="addPlane", method = RequestMethod.POST)
     public void addplaneToAirport(@RequestBody Airport airport, @RequestBody Plane plane){
         if(airport == null || plane == null)
             throw new NotFoundException(); // not going into too much specifics for now.

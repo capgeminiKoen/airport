@@ -26,6 +26,8 @@ function format ( airport ) {
             '<td>' + plane.name + '</td>'+
             '<td>'+plane.gasLevel+'</td>'+
             '<td>'+plane.maxGasLevel+'</td>'+
+            '<td><button class="btn btn-sm btn-primary" onclick="addGasToPlane('+plane.id+');">Fill her up</button></td>'+
+            '<td><button class="btn btn-sm btn-warning" onclick="movePlane('+plane.id+');">Move plane</button></td>'+
         '</tr>';
     });
     table += '</table>';
