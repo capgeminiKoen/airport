@@ -22,4 +22,7 @@ $(document).ready(function (){
     });
 
     getAirportData();
+
+    // Load modal into the modal content
+    loadContentInto("#addAirportModalContent", "views/forms/addAirport.html");
 });

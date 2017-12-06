@@ -23,4 +23,7 @@ $(document).ready(function (){
     });
 
     getPlaneData();
+
+    // Load modal into the modal content
+    loadContentInto("#addPlaneModalContent", "views/forms/addPlane.html");
 });
