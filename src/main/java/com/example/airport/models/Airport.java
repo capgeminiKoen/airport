@@ -26,9 +26,27 @@ public class Airport {
     private String city;
 
 
+    /**
+     * Add a plane to the list.
+     * @param plane
+     */
     public void addPlane(Plane plane){
         if(plane != null){
             planes.add(plane);
+        }
+    }
+
+    public boolean containsPlane(Plane plane){
+        return planes.contains(plane);
+    }
+
+    /**
+     * Remove a plane from the list
+     * @param plane
+     */
+    public void deletePlane(Plane plane){
+        if(plane != null){
+            planes.remove(plane);
         }
     }
 
