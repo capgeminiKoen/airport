@@ -3,9 +3,12 @@ package com.example.airport.controllers;
 import com.example.airport.exceptions.NotFoundException;
 import com.example.airport.models.Airport;
 import com.example.airport.models.Plane;
+import com.example.airport.repositories.AirportRepository;
 import com.example.airport.repositories.PlaneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * REST controller for the planes repository
@@ -19,6 +22,8 @@ public class PlaneController {
     @Autowired
     PlaneRepository planeRepository;
 
+    @Autowired
+    AirportRepository airportRepository;
 
     /**
      * Get all planes
@@ -67,8 +72,24 @@ public class PlaneController {
      * Delete functionality
      * @param id id of plane to remove
      */
+
+
+    /*
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     public void deletePlane(@PathVariable long id){
+        // First remove plane from airfield
+        Plane plane = planeRepository.findOne(id);
+        if(plane == null){
+            throw new NotFoundException();
+        }
+        List<Airport> airport = airportRepository.findOneByPlane(plane);
+        if(airport == null){
+            throw new NotFoundException();
+        }
+        // Delete plane from airport
+        airport.get(0).deletePlane(plane);
+        // Delete plane from repo
         planeRepository.delete(id);
     }
+    */
 }
