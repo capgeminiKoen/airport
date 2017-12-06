@@ -1,4 +1,4 @@
 function updateModalText(title, body){
-    console.log($("#standardModal .modal-title"));
-    console.log($("#standardModal .modal-body"));
+    $("#standardModal .modal-title").html(title);
+    $("#standardModal .modal-body p").html(body);
 }

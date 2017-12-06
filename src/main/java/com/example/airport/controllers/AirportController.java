@@ -2,6 +2,7 @@ package com.example.airport.controllers;
 
 import com.example.airport.exceptions.NotFoundException;
 import com.example.airport.models.Airport;
+import com.example.airport.models.AirportPlanePair;
 import com.example.airport.models.Plane;
 import com.example.airport.repositories.AirportRepository;
 import com.example.airport.repositories.PlaneRepository;
@@ -63,11 +64,14 @@ public class AirportController {
 
     /**
      * Adds a plane to the airport
-     * @param airport The airport that the plane should be added to
-     * @param plane The plane that should be added. Should exist.
+     * @param airportPlanePair Object that holds both an airplane and an airport.
      */
     @RequestMapping(value="addPlane", method = RequestMethod.POST)
-    public void addplaneToAirport(@RequestBody Airport airport, @RequestBody Plane plane){
+    public void addplaneToAirport(@RequestBody AirportPlanePair airportPlanePair){
+        // Get airport and plane
+        Airport airport = airportPlanePair.getAirport();
+        Plane plane = airportPlanePair.getPlane();
+
         if(airport == null || plane == null)
             throw new NotFoundException(); // not going into too much specifics for now.
 
@@ -85,6 +89,8 @@ public class AirportController {
 
         // We found them both! add plane to the airport.
         dbAirport.addPlane(dbPlane);
+        // Save them in the repo.
+        airportRepository.save(dbAirport);
     }
 
 }
