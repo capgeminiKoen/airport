@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * REST controller for the airport repository
+ * @author kgriffio
+ */
+
 @RestController
 @RequestMapping("api/airport/airports")
 public class AirportController {
@@ -32,7 +37,18 @@ public class AirportController {
      * @return airport that was added.
      */
     @RequestMapping(value="add", method = RequestMethod.POST)
-    public Airport addAirport(Airport airport){
+    public Airport addAirport(@RequestBody Airport airport){
         return airportRepository.save(airport);
     }
+
+    /**
+     * Deletes an airport
+     * @param airport airport to delete.
+     */
+    @RequestMapping(value="delete", method = RequestMethod.DELETE)
+    public void deleteAirport(@RequestBody Airport airport){
+        airportRepository.delete(airport);
+    }
+
+
 }

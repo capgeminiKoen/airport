@@ -16,8 +16,10 @@ public class Plane {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
+    @NotNull
+    private String name;
     @NotNull
     private float gasLevel;
     @NotNull
@@ -37,5 +39,21 @@ public class Plane {
 
     public void setMaxGasLevel(float maxGasLevel) {
         this.maxGasLevel = maxGasLevel;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
