@@ -32,7 +32,7 @@ public class AirportController {
      * @return airport that was added.
      */
     @RequestMapping(value="add", method = RequestMethod.POST)
-    public Airport addAirport(Airport airport){
+    public Airport addAirport(@RequestBody Airport airport){
         return airportRepository.save(airport);
     }
 }
