@@ -2,11 +2,40 @@ package com.example.airport.models;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
- * Plane class
+ * Plane class. POJO
  * @author kgriffio
  */
 @Entity
 public class Plane {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    long id;
+
+    @NotNull
+    private float gasLevel;
+    @NotNull
+    private float maxGasLevel;
+
+    public float getGasLevel() {
+        return gasLevel;
+    }
+
+    public void setGasLevel(float gasLevel) {
+        this.gasLevel = gasLevel;
+    }
+
+    public float getMaxGasLevel() {
+        return maxGasLevel;
+    }
+
+    public void setMaxGasLevel(float maxGasLevel) {
+        this.maxGasLevel = maxGasLevel;
+    }
 }

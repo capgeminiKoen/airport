@@ -1,6 +1,7 @@
 package com.example.airport.models;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author kgriffio
@@ -9,4 +10,10 @@ import javax.persistence.Entity;
 @Entity
 public class Airport {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @ManyToOne
+    Plane planes;
 }
