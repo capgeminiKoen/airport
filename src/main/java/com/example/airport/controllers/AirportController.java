@@ -8,11 +8,9 @@ import com.example.airport.repositories.AirportRepository;
 import com.example.airport.repositories.PlaneRepository;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 /**
@@ -92,5 +90,40 @@ public class AirportController {
         // Save them in the repo.
         airportRepository.save(dbAirport);
     }
+
+    /**
+     * Move a plane from one location to another
+     * @param planeID
+     * @param airportID
+     * @param airportTargetID
+     */
+    @RequestMapping(value = "movePlane/{planeID}/{airportID}/{airportTargetID}", method = RequestMethod.PUT)
+    public void movePlane(@PathVariable long planeID, @PathVariable long airportID, @PathVariable long airportTargetID){
+        Plane plane = planeRepository.findOne(planeID);
+        Airport airportStart = airportRepository.findOne(airportID);
+        Airport airportEnd = airportRepository.findOne(airportTargetID);
+        if(plane == null || airportStart == null || airportEnd == null){
+            throw new NotFoundException();
+        }
+
+        int gasAmount = 2;
+
+        // Check whether the plane has enough gas
+        if(plane.getGasLevel() < 2){
+
+        }
+
+        airportStart.deletePlane(plane);
+        // Save airport start
+        airportRepository.save(airportStart);
+
+        airportEnd.addPlane(plane);
+        // Save airport end
+        airportRepository.save(airportEnd);
+
+        // Costs 2 gas for now.
+        plane.setGasLevel(plane.getGasLevel() - gasAmount);
+    }
+
 
 }

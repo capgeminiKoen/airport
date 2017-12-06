@@ -51,8 +51,6 @@ function addGasToPlane(id){
 }
 
 $(document).ready(function (){
-
-
     // Setup datatable
     $("#airportTable").DataTable({
         columns: [
