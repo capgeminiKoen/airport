@@ -5,6 +5,7 @@ import com.example.airport.models.Airport;
 import com.example.airport.models.Plane;
 import com.example.airport.repositories.AirportRepository;
 import com.example.airport.repositories.PlaneRepository;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,9 @@ public class AirportController {
      */
     @RequestMapping(value="add", method = RequestMethod.POST)
     public Airport addAirport(@RequestBody Airport airport){
+        if(airport == null){
+            throw new NotFoundException();
+        }
         return airportRepository.save(airport);
     }
 

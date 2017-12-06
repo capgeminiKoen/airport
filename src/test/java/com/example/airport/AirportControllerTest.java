@@ -3,11 +3,13 @@ package com.example.airport;
 import com.example.airport.controllers.AirportController;
 import com.example.airport.models.Airport;
 import com.example.airport.repositories.AirportRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -74,5 +76,31 @@ public class AirportControllerTest {
                 .andExpect(jsonPath("$.[0].city", is(airport.getCity())))
                 .andExpect(jsonPath("$.[0].name", is(airport.getName())))
                 .andExpect(status().isOk());
+    }
+
+
+    /**
+     * Add plane test.
+     * @throws Exception
+     */
+    @Test
+    public void addAirportAPITest() throws Exception{
+
+        // Make json
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(airport);
+
+        when(airportRepository.save(Mockito.any(Airport.class))).thenReturn(airport);
+
+        // Perform post
+        this.mockMvc.perform(post("/api/airport/airports/add")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+                .andDo(print())
+                .andExpect(jsonPath("$.id", is((int)airport.getId())))
+                .andExpect(jsonPath("$.city", is(airport.getCity())))
+                .andExpect(jsonPath("$.name", is(airport.getName())))
+                .andExpect(status().isOk());
+
     }
 }
