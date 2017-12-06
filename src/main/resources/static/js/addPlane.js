@@ -44,13 +44,8 @@ function addPlane(){
     var airport = {
         id:airportId
     }
-    var airportObject = {
-        airport:airport,
-        plane: plane
-    }
 
     var planeString = JSON.stringify(plane);
-    var airportString = JSON.stringify(airportObject);
 
     $.ajax({
         url: "http://localhost:8080/api/airport/planes/add",
@@ -58,23 +53,31 @@ function addPlane(){
         data: planeString,
         contentType: "application/json",
         success: function(result) {
-            // TODO: Set the plane to the correct airfield
+        // Use ID of newplane to indicate the location.
+            var newPlane = {
+                id:result.id
+            };
+            var airportObject = {
+                airport:airport,
+                plane:newPlane
+            };
+            var airportString = JSON.stringify(airportObject);
             $.ajax({
                 url: "http://localhost:8080/api/airport/airports/addPlane",
                 type: "post",
                 data: airportString,
                 contentType: "application/json",
                 success: function(result) {
-                // TODO
+                    updateModalText("Made it!", "We have added the plane.");
+                    // Show result
+                    $("#standardModal").modal("toggle");
+                    // Toggle modal
+                    $("#addPlaneModal").modal("hide");
+                    // Refresh dataTable
+                    getPlaneData();
                 }
             });
 
-            // Show result
-            $("#standardModal").modal("toggle");
-            // Toggle modal
-            $("#addPlaneModal").modal("hide");
-            // Refresh dataTable
-            getPlaneData();
         }
     });
 }
