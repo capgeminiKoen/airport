@@ -1,4 +1,7 @@
 package com.example.airport.repositories;
 
-public interface AirportRepository {
+import com.example.airport.models.Airport;
+import org.springframework.data.repository.CrudRepository;
+
+public interface AirportRepository extends CrudRepository<Airport, Long> {
 }
