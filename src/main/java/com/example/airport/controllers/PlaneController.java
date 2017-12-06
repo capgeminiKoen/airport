@@ -72,9 +72,6 @@ public class PlaneController {
      * Delete functionality
      * @param id id of plane to remove
      */
-
-
-    /*
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     public void deletePlane(@PathVariable long id){
         // First remove plane from airfield
@@ -82,14 +79,13 @@ public class PlaneController {
         if(plane == null){
             throw new NotFoundException();
         }
-        List<Airport> airport = airportRepository.findOneByPlane(plane);
+        Airport airport = airportRepository.findOneByPlanes(plane);
         if(airport == null){
             throw new NotFoundException();
         }
         // Delete plane from airport
-        airport.get(0).deletePlane(plane);
+        airport.deletePlane(plane);
         // Delete plane from repo
         planeRepository.delete(id);
     }
-    */
 }
