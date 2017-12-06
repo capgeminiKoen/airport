@@ -68,6 +68,7 @@ function addPlane(){
                 data: airportString,
                 contentType: "application/json",
                 success: function(result) {
+                    updateModalText("Made it!", "We have added the plane.");
                     // Show result
                     $("#standardModal").modal("toggle");
                     // Toggle modal
