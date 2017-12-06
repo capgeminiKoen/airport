@@ -27,12 +27,19 @@ function format ( airport ) {
             '<td>'+plane.gasLevel+'</td>'+
             '<td>'+plane.maxGasLevel+'</td>'+
             '<td><button class="btn btn-sm btn-primary" onclick="addGasToPlane('+plane.id+');">Fill her up</button></td>'+
-            '<td><button class="btn btn-sm btn-warning" onclick="movePlane('+plane.id+');">Move plane</button></td>'+
+            '<td><button class="btn btn-sm btn-warning" onclick="openMovePlaneModal('+plane.id+');">Move plane</button></td>'+
         '</tr>';
     });
     table += '</table>';
 
     return table;
+}
+
+function openMovePlaneModal(id){
+    // Show result
+    $("#moveAirplaneModal").modal("toggle");
+    $("#movePlaneId").val(id);
+    // TODO: get airports.
 }
 
 function addGasToPlane(id){
@@ -87,4 +94,6 @@ $(document).ready(function (){
 
     // Load modal into the modal content
     loadContentInto("#addAirportModalContent", "views/forms/addAirport.html");
+    // Load modal into the modal content
+    loadContentInto("#moveAirplaneModal", "views/forms/movePlane.html");
 });
