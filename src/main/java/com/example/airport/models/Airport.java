@@ -25,6 +25,8 @@ public class Airport {
     @NotNull
     private String city;
 
+    // Todo: Add coordinates to make life more interesting.
+
     /**
      * Add a plane to the list.
      * @param plane
