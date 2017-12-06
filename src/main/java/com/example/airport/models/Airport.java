@@ -26,6 +26,12 @@ public class Airport {
     private String city;
 
 
+    public void addPlane(Plane plane){
+        if(plane != null){
+            planes.add(plane);
+        }
+    }
+
     public long getId() {
         return id;
     }
@@ -41,6 +47,7 @@ public class Airport {
     public void setPlanes(List<Plane> planes) {
         this.planes = planes;
     }
+
 
     public String getName() {
         return name;
