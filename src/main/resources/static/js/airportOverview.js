@@ -39,7 +39,48 @@ function openMovePlaneModal(id){
     // Show result
     $("#moveAirplaneModal").modal("toggle");
     $("#movePlaneId").val(id);
-    // TODO: get airports.
+    appendAirfieldsToUpdate();
+}
+
+/* Add airfields to the airfields object */
+function appendAirfieldsToUpdate(){
+
+    $.ajax({
+        url: "http://localhost:8080/api/airport/airports/all",
+        type: "get",
+        contentType: "application/json",
+        success: function(result){
+            $("#airportUpdateLocation").empty();
+            for(i=0;i<result.length;i++) {
+                $("#airportUpdateLocation").append('<option value='+result[i].id +'>'+result[i].name+'</option>');
+            }
+        }
+    });
+}
+
+function movePlane(){
+    // Show result
+    $("#moveAirplaneModal").modal("hide");
+    var planeId = $("#movePlaneId").val();
+    var airportId = $("#airportUpdateLocation").val();
+
+
+    $.ajax({
+        url: "http://localhost:8080/api/airport/airports/movePlane/" + planeId + "/" + airportId,
+        type:"put",
+        success: function(response){
+            updateModalText("Message", "We have updated the position of the plane.");
+            // Show result
+            $("#standardModal").modal("toggle");
+            // Hide earlier modal
+            $("#moveAirplaneModal").modal("hide");
+            // Refresh dataTable
+            getAirportData();
+        },
+        error: function(response){
+            showModal("Error", "This airport is unreachable. Please fill the tanks or select another one.");
+        }
+    });
 }
 
 function addGasToPlane(id){

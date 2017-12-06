@@ -6,14 +6,14 @@
 <div class="modal-body">
 
     <input type="hidden" id="movePlaneId">
-    <div class="row form-group">
-        <label for="airportLocation">Airport location</label>
-        <select class="form-control" id="airportLocation" required>
+    <div class="form-group">
+        <label for="airportUpdateLocation">Airport location</label>
+        <select class="form-control" id="airportUpdateLocation" required>
         </select>
     </div>
 
     <div class="row form-group">
-        <input id="submitButton" class="btn btn-default" type="submit" value="Update">
+        <input id="submitButton" class="btn btn-default" type="submit" onclick="movePlane()" value="Update">
     </div>
 </div>
 <div class="modal-footer">

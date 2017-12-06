@@ -25,7 +25,6 @@ public class Airport {
     @NotNull
     private String city;
 
-
     /**
      * Add a plane to the list.
      * @param plane

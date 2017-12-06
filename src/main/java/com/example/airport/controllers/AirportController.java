@@ -95,20 +95,18 @@ public class AirportController {
     /**
      * Move a plane from one location to another
      * @param planeID
-     * @param airportID
      * @param airportTargetID
      */
-    @RequestMapping(value = "movePlane/{planeID}/{airportID}/{airportTargetID}", method = RequestMethod.PUT)
-    public void movePlane(@PathVariable long planeID, @PathVariable long airportID, @PathVariable long airportTargetID){
+    @RequestMapping(value = "movePlane/{planeID}/{airportTargetID}", method = RequestMethod.PUT)
+    public void movePlane(@PathVariable long planeID, @PathVariable long airportTargetID){
         Plane plane = planeRepository.findOne(planeID);
-        Airport airportStart = airportRepository.findOne(airportID);
-        Airport airportEnd = airportRepository.findOne(airportTargetID);
-        if(plane == null || airportStart == null || airportEnd == null){
+        if(plane == null) {
             throw new NotFoundException();
         }
 
-        // Check if plane exists in airportStart.
-        if(!airportStart.containsPlane(plane)){
+        Airport airportStart = airportRepository.findOneByPlanes(plane);
+        Airport airportEnd = airportRepository.findOne(airportTargetID);
+        if(airportStart == null || airportEnd == null || airportEnd.getId() == airportStart.getId()){
             throw new NotFoundException();
         }
 
@@ -129,6 +127,7 @@ public class AirportController {
 
         // Costs 2 gas for now.
         plane.setGasLevel(plane.getGasLevel() - gasAmount);
+        planeRepository.save(plane);
     }
 
     /**
