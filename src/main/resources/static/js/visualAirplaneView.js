@@ -26,7 +26,7 @@ function fillVisualAirport(airports){
     for(i = 0; i < airports.length; i++){
         // Add all buttons
         $("#visualAirplaneView").append('<button class="btn btn-sm btn-primary airportItem" style="left:' +
-            airports[i].xCoordinate + 'px;top:' + airports[i].yCoordinate + 'px;" onclick="selectVisualAirport(' + i +
+            airports[i].xCoordinate + 'px;top:' + airports[i].yCoordinate + 'px;" onclick="event.stopPropagation(); selectVisualAirport(' + i +
             ');"><span class="glyphicon glyphicon-plane"></span> ' + airports[i].name + '</button>');
     }
 }
