@@ -52,6 +52,9 @@ function getVisualAirplanes(){
 }
 function fillVisualAirplanes(airplanes){
     console.log("Update airplanes");
+    $("#visualAirplaneView .travelling-plane").each(function(){
+        $(this).remove();
+    });
 
     for(i = 0; i < airplanes.length; i++){
         var x_start = airplanes[i].travellingFrom.xCoordinate;
@@ -64,9 +67,11 @@ function fillVisualAirplanes(airplanes){
         var y = Math.round(y_start + progress * (y_end - y_start));
         console.log(x, y);
 
+        var rotation = Math.round(Math.atan2( y_end - y_start, x_end - x_start) * 180 / Math.PI) + 90;
+
         // Add all buttons
         $("#visualAirplaneView").append('<span class="glyphicon glyphicon-plane travelling-plane" style="left:' +
-        x + 'px;top:' + y + 'px;">'+airplanes[i].name+'</span>');
+        x + 'px;top:' + y + 'px;transform:rotate('+rotation+'deg);"></span>');
     }
 }
 
