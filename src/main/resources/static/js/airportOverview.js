@@ -109,7 +109,9 @@ $(document).ready(function (){
                 "defaultContent": ''
             },
             {"data": "name"},
-            {"data": "city"}
+            {"data": "city"},
+            {"data": "xCoordinate"},
+            {"data": "yCoordinate"}
         ],
          order: [[1, 'asc']]
     });

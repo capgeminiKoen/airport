@@ -1,5 +1,7 @@
 package com.example.airport.models;
 
+import javax.persistence.Entity;
+
 /**
  * Simple coordinate class.
  */
