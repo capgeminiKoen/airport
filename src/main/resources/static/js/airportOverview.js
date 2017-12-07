@@ -138,5 +138,5 @@ $(document).ready(function (){
     // Load modal into the modal content
     loadContentInto("#addAirportModalContent", "views/forms/addAirport.html");
     // Load modal into the modal content
-    loadContentInto("#moveAirplaneModal", "views/forms/movePlane.html");
+    loadContentInto("#moveAirplaneModalBody", "views/forms/movePlane.html");
 });

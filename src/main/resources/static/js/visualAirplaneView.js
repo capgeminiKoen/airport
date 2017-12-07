@@ -35,11 +35,35 @@ function selectVisualAirport(airportIndex){
 }
 
 function fillAirportPopup(airport){
+    $("#airportPopupPlanes").empty();
     for(i = 0; i < airport.planes.length; i++){
         $("#airportPopupPlanes").append('<option value="' + airport.planes[i].id + '">' + airport.planes[i].name + '</option>');
     }
+    $("#airportPopupLocation").empty();
     for(i = 0; i < airports.length; i++){
         $("#airportPopupLocation").append('<option value="' + airports[i].id + '">' + airports[i].name + '</option>');
     }
+}
 
+function movePlaneFromAirport(){
+    var selectedPlaneId = $("#airportPopupPlanes").val();
+    var selectedAirportId = $("#airportPopupLocation").val();
+
+
+    $.ajax({
+        url: "http://localhost:8080/api/airport/airports/movePlane/" + selectedPlaneId + "/" + selectedAirportId,
+        type:"put",
+        success: function(response){
+            updateModalText("Message", "We have updated the position of the plane.");
+            // Show result
+            $("#standardModal").modal("toggle");
+            // Hide earlier modal
+            $("#airportPopup").modal("hide");
+            // Refresh dataTable
+            getVisualAirports();
+        },
+        error: function(response){
+            showModal("Error", "This airport is unreachable. Please fill the tanks or select another one.");
+        }
+    });
 }

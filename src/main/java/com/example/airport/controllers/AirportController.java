@@ -110,10 +110,10 @@ public class AirportController {
             throw new NotFoundException();
         }
 
-        int gasAmount = 2;
+        int gasAmount = airportStart.distance(airportEnd);
 
         // Check whether the plane has enough gas
-        if(plane.getGasLevel() < 2){
+        if(plane.getGasLevel() < gasAmount){
             throw new NoFuelException();
         }
 
@@ -125,7 +125,6 @@ public class AirportController {
         // Save airport end
         airportRepository.save(airportEnd);
 
-        // Costs 2 gas for now.
         plane.setGasLevel(plane.getGasLevel() - gasAmount);
         planeRepository.save(plane);
     }
