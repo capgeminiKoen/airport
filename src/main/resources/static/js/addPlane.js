@@ -33,12 +33,14 @@ function addPlane(){
     var name = $("#planeName").val();
     var gasLevel = $("#gasLevel").val();
     var maxGasLevel = $("#maxGasLevel").val();
+    var planeSpeed = $("#planeSpeed").val();
     var airportId = $("#airportLocation").val();
 
     var plane = {
         name:name,
         gasLevel:gasLevel,
-        maxGasLevel:maxGasLevel
+        maxGasLevel:maxGasLevel,
+        speed:planeSpeed
     };
 
     var airport = {

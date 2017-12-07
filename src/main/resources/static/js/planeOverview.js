@@ -19,6 +19,7 @@ $(document).ready(function (){
             {"data": "name"},
             {"data": "gasLevel"},
             {"data": "maxGasLevel"},
+            {"data": "speed"},
             {
                 "className":      'details-control',
                 "orderable":      false,
