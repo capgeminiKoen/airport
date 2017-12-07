@@ -8,10 +8,12 @@ $(document).ready(function(){
         loadContentInto("#airportPopupModalBody", "views/forms/airportPopup.html");
         loadContentInto("#airportVisualAddPopupModalBody", "views/forms/addVisualAirportPopup.html");
 
-        $('#visualAirplaneView').click(visualAirportAddClick);
+        $('#visualAirplaneCanvas').click(visualAirportAddClick);
 
         visualAirportsLoaded = true;
         getVisualAirplanes();
+        // Init canvas
+        initializeCanvas();
     }
 });
 
@@ -28,19 +30,16 @@ function getVisualAirports(){
 
 function fillVisualAirport(airports){
 // First empty the container
-    $("#visualAirplaneView").empty();
+    $("#airportContainer").empty();
     for(i = 0; i < airports.length; i++){
         // Add all buttons
-        $("#visualAirplaneView").append('<button class="btn btn-sm btn-primary airportItem" style="left:' +
+        $("#airportContainer").append('<button class="btn btn-sm btn-primary airportItem" style="left:' +
             airports[i].xCoordinate + 'px;top:' + airports[i].yCoordinate + 'px;" onclick="event.stopPropagation(); selectVisualAirport(' + i +
             ');"><span class="glyphicon glyphicon-plane"></span> ' + airports[i].name + '</button>');
     }
 }
 
 function getVisualAirplanes(){
-    // Execute this function every 500 ms.
-    setTimeout(getVisualAirplanes, 500);
-
     $.ajax({
         url: "http://localhost:8080/api/airport/planes/travelling",
         type: "get",
@@ -51,28 +50,7 @@ function getVisualAirplanes(){
     });
 }
 function fillVisualAirplanes(airplanes){
-    console.log("Update airplanes");
-    $("#visualAirplaneView .travelling-plane").each(function(){
-        $(this).remove();
-    });
-
-    for(i = 0; i < airplanes.length; i++){
-        var x_start = airplanes[i].travellingFrom.xCoordinate;
-        var y_start = airplanes[i].travellingFrom.yCoordinate;
-        var x_end = airplanes[i].travellingTo.xCoordinate;
-        var y_end = airplanes[i].travellingTo.yCoordinate;
-        var progress = airplanes[i].currentJourneyProgress / airplanes[i].currentTravelDistance;
-
-        var x = Math.round(x_start + progress * (x_end - x_start));
-        var y = Math.round(y_start + progress * (y_end - y_start));
-        console.log(x, y);
-
-        var rotation = Math.round(Math.atan2( y_end - y_start, x_end - x_start) * 180 / Math.PI) + 90;
-
-        // Add all buttons
-        $("#visualAirplaneView").append('<span class="glyphicon glyphicon-plane travelling-plane" style="left:' +
-        x + 'px;top:' + y + 'px;transform:rotate('+rotation+'deg);"></span>');
-    }
+    planeSimulation.addPlanes(airplanes);
 }
 
 function selectVisualAirport(airportIndex){
@@ -163,4 +141,17 @@ function addVisualAirportFormSubmit(){
             getVisualAirports();
         }
     });
+}
+
+//Function to get the mouse position
+function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
+}
+//Function to check whether a point is inside a rectangle
+function isInside(pos, rect){
+    return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.height && pos.y > rect.y
 }

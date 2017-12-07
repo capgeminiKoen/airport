@@ -3,6 +3,9 @@ package com.example.airport.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 /**
  * Plane class. POJO
@@ -31,6 +34,7 @@ public class Plane {
     private Airport travellingFrom;
     private float currentTravelDistance;
     private float currentJourneyProgress;
+    private Timestamp departureTime;
 
     public float getGasLevel() {
         return gasLevel;
@@ -120,6 +124,8 @@ public class Plane {
         currentJourneyProgress = 0.0f;
         travelling = true;
         from.deletePlane(this);
+        // Get current time as departuretime.
+        departureTime = Timestamp.from(Instant.now());
     }
 
     /**
@@ -127,8 +133,9 @@ public class Plane {
      * @return arrival airport upon arrival
      */
     public Airport updateJourney(){
-        // Increment current progress
-        currentJourneyProgress += speed;
+        // Get difference in ms
+        int msDiff = (int)(Timestamp.from(Instant.now()).getTime() - departureTime.getTime());
+        currentJourneyProgress += (speed * msDiff) / 1000;
         if(currentJourneyProgress > currentTravelDistance){
             travelling = false;
             Airport temp_travellingTo = travellingTo;

@@ -3,10 +3,18 @@
     margin:auto;
     width:1024px;
     height:768px;
-    background-color: lightgrey;
     position: relative;
     background-image:url("../img/nederland.jpg");
-    cursor:pointer;
+}
+#visualAirplaneView > canvas {
+    width:100%;
+    height:100%;
+}
+#visualAirplaneView > .airports {
+    top:0px;
+    left:0px;
+    position:absolute;
+    width:100%;
 }
 .airportItem, travelling-plane{
     position:absolute;
