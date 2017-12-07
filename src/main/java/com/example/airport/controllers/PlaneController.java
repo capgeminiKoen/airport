@@ -88,4 +88,21 @@ public class PlaneController {
         // Delete plane from repo
         planeRepository.delete(id);
     }
+
+    @RequestMapping(value = "travelling", method = RequestMethod.GET)
+    public Iterable<Plane> getFlyingPlanes(){
+        List<Plane> flyingPlanes = planeRepository.findByTravelling(true);
+        // Update all planes in this list.
+        for (Plane plane:flyingPlanes) {
+            Airport dest = plane.updateJourney();
+            // Save changes
+            planeRepository.save(plane);
+            // Save plane into the airport if needed.
+            if(dest != null){
+                dest.addPlane(plane);
+                airportRepository.save(dest);
+            }
+        }
+        return flyingPlanes;
+    }
 }

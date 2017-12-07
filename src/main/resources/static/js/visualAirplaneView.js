@@ -1,15 +1,21 @@
 var airports = [];
+var flyingPlanes = [];
+var visualAirportsLoaded;
 
 $(document).ready(function(){
-    getVisualAirports();
-    loadContentInto("#airportPopupModalBody", "views/forms/airportPopup.html");
-    loadContentInto("#airportVisualAddPopupModalBody", "views/forms/addVisualAirportPopup.html");
+    if(!visualAirportsLoaded){
+        getVisualAirports();
+        loadContentInto("#airportPopupModalBody", "views/forms/airportPopup.html");
+        loadContentInto("#airportVisualAddPopupModalBody", "views/forms/addVisualAirportPopup.html");
 
-    $('#visualAirplaneView').click(visualAirportAddClick);
+        $('#visualAirplaneView').click(visualAirportAddClick);
+
+        visualAirportsLoaded = true;
+        getVisualAirplanes();
+    }
 });
 
 function getVisualAirports(){
-
     $.ajax({
         url: "http://localhost:8080/api/airport/airports/all",
         type: "get",
@@ -28,6 +34,39 @@ function fillVisualAirport(airports){
         $("#visualAirplaneView").append('<button class="btn btn-sm btn-primary airportItem" style="left:' +
             airports[i].xCoordinate + 'px;top:' + airports[i].yCoordinate + 'px;" onclick="event.stopPropagation(); selectVisualAirport(' + i +
             ');"><span class="glyphicon glyphicon-plane"></span> ' + airports[i].name + '</button>');
+    }
+}
+
+function getVisualAirplanes(){
+    // Execute this function every 500 ms.
+    setTimeout(getVisualAirplanes, 500);
+
+    $.ajax({
+        url: "http://localhost:8080/api/airport/planes/travelling",
+        type: "get",
+        success: function(result) {
+            flyingPlanes = result;
+            fillVisualAirplanes(result);
+        }
+    });
+}
+function fillVisualAirplanes(airplanes){
+    console.log("Update airplanes");
+
+    for(i = 0; i < airplanes.length; i++){
+        var x_start = airplanes[i].travellingFrom.xCoordinate;
+        var y_start = airplanes[i].travellingFrom.yCoordinate;
+        var x_end = airplanes[i].travellingTo.xCoordinate;
+        var y_end = airplanes[i].travellingTo.yCoordinate;
+        var progress = airplanes[i].currentJourneyProgress / airplanes[i].currentTravelDistance;
+
+        var x = Math.round(x_start + progress * (x_end - x_start));
+        var y = Math.round(y_start + progress * (y_end - y_start));
+        console.log(x, y);
+
+        // Add all buttons
+        $("#visualAirplaneView").append('<span class="glyphicon glyphicon-plane travelling-plane" style="left:' +
+        x + 'px;top:' + y + 'px;">'+airplanes[i].name+'</span>');
     }
 }
 

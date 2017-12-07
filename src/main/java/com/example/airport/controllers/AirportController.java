@@ -117,15 +117,15 @@ public class AirportController {
             throw new NoFuelException();
         }
 
+        // Plane leaves this airport
         airportStart.deletePlane(plane);
         // Save airport start
         airportRepository.save(airportStart);
 
-        airportEnd.addPlane(plane);
-        // Save airport end
-        airportRepository.save(airportEnd);
-
+        // Update plane's gas level
         plane.setGasLevel(plane.getGasLevel() - gasAmount);
+        // Set plane to fly
+        plane.startTravelling(airportStart, airportEnd);
         planeRepository.save(plane);
     }
 
@@ -137,5 +137,4 @@ public class AirportController {
     public void deleteAircraft(@PathVariable long id){
         airportRepository.delete(id);
     }
-
 }

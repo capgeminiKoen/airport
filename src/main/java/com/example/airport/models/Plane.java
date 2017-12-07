@@ -25,8 +25,12 @@ public class Plane {
     private float speed;
 
     private boolean travelling;
+    @ManyToOne
     private Airport travellingTo;
-    private Airport travelingFrom;
+    @ManyToOne
+    private Airport travellingFrom;
+    private float currentTravelDistance;
+    private float currentJourneyProgress;
 
     public float getGasLevel() {
         return gasLevel;
@@ -68,12 +72,12 @@ public class Plane {
         this.travellingTo = travellingTo;
     }
 
-    public Airport getTravelingFrom() {
-        return travelingFrom;
+    public Airport getTravellingFrom() {
+        return travellingFrom;
     }
 
-    public void setTravelingFrom(Airport travelingFrom) {
-        this.travelingFrom = travelingFrom;
+    public void setTravellingFrom(Airport travellingFrom) {
+        this.travellingFrom = travellingFrom;
     }
 
     public float getSpeed() {
@@ -82,5 +86,57 @@ public class Plane {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public boolean isTravelling() {
+        return travelling;
+    }
+
+    public void setTravelling(boolean travelling) {
+        this.travelling = travelling;
+    }
+
+    public float getCurrentTravelDistance() {
+        return currentTravelDistance;
+    }
+
+    public void setCurrentTravelDistance(float currentTravelDistance) {
+        this.currentTravelDistance = currentTravelDistance;
+    }
+
+    public float getCurrentJourneyProgress() {
+        return currentJourneyProgress;
+    }
+
+    public void setCurrentJourneyProgress(float currentJourneyProgress) {
+        this.currentJourneyProgress = currentJourneyProgress;
+    }
+
+    public void startTravelling(Airport from, Airport to){
+        int distance = from.distance(to);
+        travellingFrom = from;
+        travellingTo = to;
+        currentTravelDistance = distance;
+        currentJourneyProgress = 0.0f;
+        travelling = true;
+        from.deletePlane(this);
+    }
+
+    /**
+     *
+     * @return arrival airport upon arrival
+     */
+    public Airport updateJourney(){
+        // Increment current progress
+        currentJourneyProgress += speed;
+        if(currentJourneyProgress > currentTravelDistance){
+            travelling = false;
+            Airport temp_travellingTo = travellingTo;
+            travellingTo = null;
+            travellingFrom = null;
+            currentJourneyProgress = 0;
+            return temp_travellingTo;
+        }
+        return null;
     }
 }

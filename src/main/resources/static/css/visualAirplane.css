@@ -8,6 +8,11 @@
     background-image:url("../img/nederland.jpg");
     cursor:pointer;
 }
-.airportItem{
+.airportItem, travelling-plane{
     position:absolute;
+}
+.travelling-plane{
+    color:red;
+    font-weight:bold;
+    font-size:32px;
 }
