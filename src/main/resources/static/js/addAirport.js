@@ -15,11 +15,14 @@ function addAirport(){
 
     var airportName = $("#airportName").val();
     var airportCity = $("#airportCity").val();
-
+    var xCoordinate = $("#airportLocationX").val();
+    var yCoordinate = $("#airportLocationY").val();
 
     var airport = {
         name:airportName,
-        city:airportCity
+        city:airportCity,
+        xCoordinate:xCoordinate,
+        yCoordinate:yCoordinate
     };
 
     var airportString = JSON.stringify(airport);

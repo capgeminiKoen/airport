@@ -25,6 +25,10 @@ public class Airport {
     @NotNull
     private String city;
 
+    @NotNull
+    private int xCoordinate;
+    @NotNull
+    private int yCoordinate;
 
     /**
      * Add a plane to the list.
@@ -81,5 +85,31 @@ public class Airport {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public int getxCoordinate() {
+        return xCoordinate;
+    }
+
+    public void setxCoordinate(int xCoordinate) {
+        this.xCoordinate = xCoordinate;
+    }
+
+    public int getyCoordinate() {
+        return yCoordinate;
+    }
+
+    public void setyCoordinate(int yCoordinate) {
+        this.yCoordinate = yCoordinate;
+    }
+
+    /**
+     * Calculates distance between two airports
+     * @return distance between two airports
+     */
+    public int distance(Airport airport){
+        Coordinate end = new Coordinate(airport.xCoordinate, airport.yCoordinate);
+        Coordinate start = new Coordinate(this.xCoordinate, this.yCoordinate);
+        return start.distance(end);
     }
 }

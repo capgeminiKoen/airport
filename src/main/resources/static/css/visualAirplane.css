@@ -1,0 +1,13 @@
+
+#visualAirplaneView{
+    margin:auto;
+    width:1024px;
+    height:768px;
+    background-color: lightgrey;
+    position: relative;
+    background-image:url("../img/nederland.jpg");
+    cursor:pointer;
+}
+.airportItem{
+    position:absolute;
+}

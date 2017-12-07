@@ -1,32 +1,33 @@
-<div class="container">
+
     <h1>Add plane</h1>
     <form data-toggle="validator" role="form" id="addPlaneForm">
-        <div class="row form-group">
+        <div class="form-group">
             <label for="planeName">Plane name</label>
             <input type="text" class="form-control" id="planeName" name="roomNumber" placeholder="Plane name" required>
         </div>
 
-        <div class="row form-group">
+        <div class="form-group">
             <label for="gasLevel">Current gas level</label>
             <input type="number" class="form-control" id="gasLevel" name="roomNumber" placeholder="Current gas level" required>
         </div>
 
-        <div class="row form-group">
+        <div class="form-group">
             <label for="maxGasLevel">Max gas level</label>
             <input type="number" class="form-control" id="maxGasLevel" name="roomNumber" placeholder="Fuel tank size" required>
         </div>
 
-        <div class="row form-group">
+        <div class="form-group">
             <label for="airportLocation">Airport location</label>
             <select class="form-control" id="airportLocation" name="roomNumber" required>
             </select>
         </div>
 
-        <div class="row form-group">
+
+
+        <div class="form-group">
             <input id="submitButton" class="btn btn-default" type="submit" value="Add Plane">
         </div>
     </form>
-</div>
 
 <!--Import the corresponding js-->
 <script src="js/addPlane.js"></script>
