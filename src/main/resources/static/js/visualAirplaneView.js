@@ -3,6 +3,9 @@ var airports = [];
 $(document).ready(function(){
     getVisualAirports();
     loadContentInto("#airportPopupModalBody", "views/forms/airportPopup.html");
+    loadContentInto("#airportVisualAddPopupModalBody", "views/forms/addVisualAirportPopup.html");
+
+    $('#visualAirplaneView').click(visualAirportAddClick);
 });
 
 function getVisualAirports(){
@@ -64,6 +67,56 @@ function movePlaneFromAirport(){
         },
         error: function(response){
             showModal("Error", "This airport is unreachable. Please fill the tanks or select another one.");
+        }
+    });
+}
+
+function visualAirportAddClick(e){//Offset mouse Position
+    var posX = $(this).offset().left,
+      posY = $(this).offset().top;
+
+    var airportPositionX = Math.round(e.pageX - posX);
+    var airportPositionY = Math.round(e.pageY - posY);
+    showAddAirportModal(airportPositionX, airportPositionY);
+}
+
+function showAddAirportModal(x, y){
+    $("#airportVisualAddPopup").modal("show");
+    // Set x and y
+    $("#visualAirportFormXPosition").val(x);
+    $("#visualAirportFormYPosition").val(y);
+}
+
+function addVisualAirportFormSubmit(){
+
+    // Get x and y
+    var xCoordinate = $("#visualAirportFormXPosition").val();
+    var yCoordinate = $("#visualAirportFormYPosition").val();
+    var airportName = $("#airportNameVisual").val();
+    var airportCity = $("#airportCityVisual").val();
+
+    var airport = {
+        name:airportName,
+        city:airportCity,
+        xCoordinate:xCoordinate,
+        yCoordinate:yCoordinate
+    };
+
+    var airportString = JSON.stringify(airport);
+
+    $.ajax({
+        url: "http://localhost:8080/api/airport/airports/add",
+        type: "post",
+        data: airportString,
+        contentType: "application/json",
+        success: function(result) {
+            updateModalText("Made it!", "We have added the airport.");
+            // Show result
+            $("#standardModal").modal("toggle");
+            // Dismiss modal
+            $("#airportVisualAddPopup").modal("hide");
+            // Refresh dataTable
+            getVisualAirports();
         }
     });
 }
